@@ -1,15 +1,22 @@
-<interface type='<%= @type %>'<% if @trust_guest_rx_filters %> trustGuestRxFilters='yes'<% end %>>
+<interface type='<%= @type %>'<% if @trust_guest_rx_filters %> trustGuestRxFilters='yes'<% end %> <%if @type == 'hostdev'%> managed='yes'<% end %> >
   <% if @mac %>
   <mac address='<%= @mac %>'/>
   <% end %>
-  <%if @type == 'direct'%>
+  <% if @type == 'direct'%>
   <source dev='<%= @device %>' mode='<%= @mode %>'/>
+  <model type='<%=@model_type%>'/>
+  <% elsif @type == 'hostdev'%>
+  <driver name="vfio"/>
+  <source>
+    <address type='pci' domain='<%= @vfdomain %>' bus='<%= @vfbus %>' slot='<%= @vfslot %>' function='<%= @vffunc %>'/>
+  </source>
   <% elsif !@portgroup.nil? %>
   <source network='<%=@network_name%>' portgroup='<%=@portgroup%>'/>
+  <model type='<%=@model_type%>'/>
   <% else %>
   <source bridge='<%=@device%>'/>
-  <% end %>
   <model type='<%=@model_type%>'/>
+  <% end %>
   <% if @ovs %>
   <virtualport type='openvswitch'/>
   <% end %>

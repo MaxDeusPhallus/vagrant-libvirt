@@ -74,8 +74,13 @@ module VagrantPlugins
             # Configuration for public interfaces which use the macvtap driver
             if iface_configuration[:iface_type] == :public_network
               @device = iface_configuration.fetch(:dev, 'eth0')
+
               @mode = iface_configuration.fetch(:mode, 'bridge')
               @type = iface_configuration.fetch(:type, 'direct')
+              @vfdomain = iface_configuration.fetch(:vfdomain, nil)
+              @vfbus = iface_configuration.fetch(:vfbus, nil)
+              @vfslot = iface_configuration.fetch(:vfslot, nil)
+              @vffunc = iface_configuration.fetch(:vffunc, nil)
               @model_type = iface_configuration.fetch(:model_type, @nic_model_type)
               @portgroup = iface_configuration.fetch(:portgroup, nil)
               @network_name = iface_configuration.fetch(:network_name, @network_name)
@@ -112,6 +117,21 @@ module VagrantPlugins
             if @mac
               @mac = @mac.scan(/(\h{2})/).join(':')
               message << " Using MAC address: #{@mac}"
+            end
+
+            if @type == 'direct'
+              message << " direct -> device: #{@device} mode: #{@mode} model: #{@model_type}"
+            elsif @type == 'hostdev'
+              message << " hostdev SR-IOV -> type: pci domain: #{@vfdomain} bus: #{@vfbus} slot: #{@vfslot} function: #{@vffunc}"
+            elsif !@portgroup.nil?
+              message << " portgroup -> network: #{@network_name} portgroup: #{@portgroup} model: #{@model_type}"
+            else
+              message << " bridge: #{@device} model: #{@model_type}"
+            end
+
+            if @ovs
+              #virtualport type='openvswitch'/>
+              message << " virtualport -> type: openswitch"
             end
             @logger.info(message)
 
