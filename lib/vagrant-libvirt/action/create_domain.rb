@@ -33,6 +33,7 @@ module VagrantPlugins
           @name = env[:domain_name]
           @uuid = config.uuid
           @cpus = config.cpus.to_i
+          @cpu_cpuset = config.cpu_cpuset
           @cpu_features = config.cpu_features
           @cpu_mode = config.cpu_mode
           @cpu_model = config.cpu_model
@@ -162,6 +163,11 @@ module VagrantPlugins
           end
           env[:ui].info(" -- Domain type:       #{@domain_type}")
           env[:ui].info(" -- Cpus:              #{@cpus}")
+          if @cpu_cpuset != nil
+            env[:ui].info(" -- Host CPU Affinity: #{@cpu_cpuset}")
+          else
+            env[:ui].info(' -- Host CPU Affinity:  Not Set')
+          end
           @cpu_features.each do |cpu_feature|
             env[:ui].info(" -- CPU Feature:       name=#{cpu_feature[:name]}, policy=#{cpu_feature[:policy]}")
           end

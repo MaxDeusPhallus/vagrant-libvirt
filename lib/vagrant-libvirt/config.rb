@@ -58,6 +58,7 @@ module VagrantPlugins
       attr_accessor :memory
       attr_accessor :channel
       attr_accessor :cpus
+      attr_accessor :cpu_cpuset
       attr_accessor :cpu_mode
       attr_accessor :cpu_model
       attr_accessor :cpu_fallback
@@ -143,6 +144,7 @@ module VagrantPlugins
         @uuid              = UNSET_VALUE
         @memory            = UNSET_VALUE
         @cpus              = UNSET_VALUE
+        @cpu_cpuset        = UNSET_VALUE
         @cpu_mode          = UNSET_VALUE
         @cpu_model         = UNSET_VALUE
         @cpu_fallback      = UNSET_VALUE
@@ -501,6 +503,7 @@ module VagrantPlugins
         @uuid = '' if @uuid == UNSET_VALUE
         @memory = 512 if @memory == UNSET_VALUE
         @cpus = 1 if @cpus == UNSET_VALUE
+        @cpu_cpuset = nil if @cpu_cpuset == UNSET_VALUE
         @cpu_mode = 'host-model' if @cpu_mode == UNSET_VALUE
         @cpu_model = 'qemu64' if @cpu_model == UNSET_VALUE
         @cpu_fallback = 'allow' if @cpu_fallback == UNSET_VALUE
