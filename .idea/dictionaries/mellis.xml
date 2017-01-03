@@ -4,6 +4,7 @@
       <w>cpus</w>
       <w>cpuset</w>
       <w>numa</w>
+      <w>nvram</w>
     </words>
   </dictionary>
 </component>

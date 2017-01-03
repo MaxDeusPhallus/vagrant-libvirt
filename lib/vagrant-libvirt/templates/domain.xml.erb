@@ -47,7 +47,14 @@
       <% end %>
     <% end %>
     <% if @loader %>
-      <loader readonly='yes' type='rom'><%= @loader %></loader>
+      <% if @loader_type %>
+        <loader readonly='yes' type='<%= @loader_type %>'><%= @loader %></loader>
+      <% else %>
+        <loader readonly='yes' type='rom'><%= @loader %></loader>
+      <% end %>
+    <% end %>
+    <% if @nvram %>
+      <nvram><%= @nvram %></nvram>
     <% end %>
     <% if @boot_order.count >= 1 %>
       <bootmenu enable='yes'/>
@@ -60,9 +67,13 @@
     <% end %>
   </os>
   <features>
-    <acpi/>
-    <apic/>
-    <pae/>
+    <% if @machine_arch != 'aarch64'%>
+      <acpi/>
+      <apic/>
+      <pae/>
+    <% else %>
+      <gic version='3'/>
+    <% end %>
     <% if @kvm_hidden %>
       <kvm>
         <hidden state='on'/>

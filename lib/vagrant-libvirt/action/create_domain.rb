@@ -40,6 +40,9 @@ module VagrantPlugins
           @cpu_fallback = config.cpu_fallback
           @numa_nodes = config.numa_nodes
           @loader = config.loader
+          @loader_type = config.loader_type
+          @nvram = config.nvram
+
           @machine_type = config.machine_type
           @machine_arch = config.machine_arch
           @disk_bus = config.disk_bus
@@ -174,6 +177,16 @@ module VagrantPlugins
           env[:ui].info(" -- Memory:            #{@memory_size / 1024}M")
           env[:ui].info(" -- Management MAC:    #{@management_network_mac}")
           env[:ui].info(" -- Loader:            #{@loader}")
+          if @loader_type != nil
+            env[:ui].info(" -- Loader Type: #{@loader_type}")
+          else
+            env[:ui].info(' -- Loader Type: Not Set (default to rom)')
+          end
+          if @nvram != nil
+            env[:ui].info(" -- NVRAM: #{@loader_type}")
+          else
+            env[:ui].info(' -- NVRAM: Not Set')
+          end
           if env[:machine].config.vm.box
             env[:ui].info(" -- Base box:          #{env[:machine].box.name}")
           end
