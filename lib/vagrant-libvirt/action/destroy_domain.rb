@@ -60,7 +60,7 @@ module VagrantPlugins
                   x.path =~ /\/#{disk[:path]}$/ && x.pool_name == poolname
                 end.first
                 libvirt_disk.destroy if libvirt_disk
-              end
+              end/vm_action.rb
             end
 
             # remove root storage
@@ -69,6 +69,8 @@ module VagrantPlugins
             end.first
             root_disk.destroy if root_disk
           end
+
+          domain.undefine(flags: 4) #4 is VIR_DOMAIN_UNDEFINE_NVRAM
 
           @app.call(env)
         end

@@ -90,9 +90,14 @@
       <driver name='qemu' type='qcow2' cache='<%= @domain_volume_cache %>'/>
       <source file='<%= @domain_volume_path %>'/>
       <%# we need to ensure a unique target dev -%>
-      <target dev='vda' bus='<%= @disk_bus %>'/>
+      <target dev='vda' bus='<%= @disk_bus %>'
+      />
     </disk>
     <% end %>
+    <% if @disk_bus == 'scsi' %>
+    <controller type="scsi" index="0" model="virtio-scsi"/>
+    <% end %>
+
 <%# additional disks -%>
 <% @disks.each do |d| -%>
     <disk type='file' device='disk'>

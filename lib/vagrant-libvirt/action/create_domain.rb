@@ -160,60 +160,60 @@ module VagrantPlugins
 
           # Output the settings we're going to use to the user
           env[:ui].info(I18n.t('vagrant_libvirt.creating_domain'))
-          env[:ui].info(" -- Name:              #{@name}")
+          env[:ui].info(" -- Name:               #{@name}")
           if @uuid != ''
-            env[:ui].info(" -- Forced UUID:       #{@uuid}")
+            env[:ui].info(" -- Forced UUID:        #{@uuid}")
           end
-          env[:ui].info(" -- Domain type:       #{@domain_type}")
-          env[:ui].info(" -- Cpus:              #{@cpus}")
+          env[:ui].info(" -- Domain type:        #{@domain_type}")
+          env[:ui].info(" -- Cpus:               #{@cpus}")
           if @cpu_cpuset != nil
             env[:ui].info(" -- Host CPU Affinity: #{@cpu_cpuset}")
           else
             env[:ui].info(' -- Host CPU Affinity:  Not Set')
           end
           @cpu_features.each do |cpu_feature|
-            env[:ui].info(" -- CPU Feature:       name=#{cpu_feature[:name]}, policy=#{cpu_feature[:policy]}")
+            env[:ui].info(" -- CPU Feature:        name=#{cpu_feature[:name]}, policy=#{cpu_feature[:policy]}")
           end
-          env[:ui].info(" -- Memory:            #{@memory_size / 1024}M")
-          env[:ui].info(" -- Management MAC:    #{@management_network_mac}")
-          env[:ui].info(" -- Loader:            #{@loader}")
+          env[:ui].info(" -- Memory:             #{@memory_size / 1024}M")
+          env[:ui].info(" -- Management MAC:     #{@management_network_mac}")
+          env[:ui].info(" -- Loader:             #{@loader}")
           if @loader_type != nil
-            env[:ui].info(" -- Loader Type: #{@loader_type}")
+            env[:ui].info(" -- Loader Type:        #{@loader_type}")
           else
             env[:ui].info(' -- Loader Type: Not Set (default to rom)')
           end
           if @nvram != nil
-            env[:ui].info(" -- NVRAM: #{@loader_type}")
+            env[:ui].info(" -- NVRAM:              #{@nvram}")
           else
             env[:ui].info(' -- NVRAM: Not Set')
           end
           if env[:machine].config.vm.box
-            env[:ui].info(" -- Base box:          #{env[:machine].box.name}")
+            env[:ui].info(" -- Base box:           #{env[:machine].box.name}")
           end
-          env[:ui].info(" -- Storage pool:      #{@storage_pool_name}")
-          env[:ui].info(" -- Image:             #{@domain_volume_path} (#{env[:box_virtual_size]}G)")
-          env[:ui].info(" -- Volume Cache:      #{@domain_volume_cache}")
-          env[:ui].info(" -- Kernel:            #{@kernel}")
-          env[:ui].info(" -- Initrd:            #{@initrd}")
-          env[:ui].info(" -- Graphics Type:     #{@graphics_type}")
-          env[:ui].info(" -- Graphics Port:     #{@graphics_port}")
-          env[:ui].info(" -- Graphics IP:       #{@graphics_ip}")
-          env[:ui].info(" -- Graphics Password: #{@graphics_passwd.empty? ? 'Not defined' : 'Defined'}")
-          env[:ui].info(" -- Video Type:        #{@video_type}")
-          env[:ui].info(" -- Video VRAM:        #{@video_vram}")
-          env[:ui].info(" -- Keymap:            #{@keymap}")
-          env[:ui].info(" -- TPM Path:          #{@tpm_path}")
+          env[:ui].info(" -- Storage pool:       #{@storage_pool_name}")
+          env[:ui].info(" -- Image:              #{@domain_volume_path} (#{env[:box_virtual_size]}G)")
+          env[:ui].info(" -- Volume Cache:       #{@domain_volume_cache}")
+          env[:ui].info(" -- Kernel:             #{@kernel}")
+          env[:ui].info(" -- Initrd:             #{@initrd}")
+          env[:ui].info(" -- Graphics Type:      #{@graphics_type}")
+          env[:ui].info(" -- Graphics Port:      #{@graphics_port}")
+          env[:ui].info(" -- Graphics IP:        #{@graphics_ip}")
+          env[:ui].info(" -- Graphics Password:  #{@graphics_passwd.empty? ? 'Not defined' : 'Defined'}")
+          env[:ui].info(" -- Video Type:         #{@video_type}")
+          env[:ui].info(" -- Video VRAM:         #{@video_vram}")
+          env[:ui].info(" -- Keymap:             #{@keymap}")
+          env[:ui].info(" -- TPM Path:           #{@tpm_path}")
 
           @boot_order.each do |device|
-            env[:ui].info(" -- Boot device:        #{device}")
+            env[:ui].info(" -- Boot device:         #{device}")
           end
 
           if @disks.length > 0
-            env[:ui].info(" -- Disks:         #{_disks_print(@disks)}")
+            env[:ui].info(" -- Disks:          #{_disks_print(@disks)}")
           end
 
           @disks.each do |disk|
-            msg = " -- Disk(#{disk[:device]}):     #{disk[:absolute_path]}"
+            msg = " -- Disk(#{disk[:device]}):      #{disk[:absolute_path]}"
             msg += ' Shared' if disk[:shareable]
             msg += ' (Remove only manually)' if disk[:allow_existing]
             msg += ' Not created - using existed.' if disk[:preexisting]
@@ -221,28 +221,28 @@ module VagrantPlugins
           end
 
           if @cdroms.length > 0
-            env[:ui].info(" -- CDROMS:            #{_cdroms_print(@cdroms)}")
+            env[:ui].info(" -- CDROMS:             #{_cdroms_print(@cdroms)}")
           end
 
           @cdroms.each do |cdrom|
-            env[:ui].info(" -- CDROM(#{cdrom[:dev]}):        #{cdrom[:path]}")
+            env[:ui].info(" -- CDROM(#{cdrom[:dev]}):         #{cdrom[:path]}")
           end
 
           @inputs.each do |input|
-            env[:ui].info(" -- INPUT:             type=#{input[:type]}, bus=#{input[:bus]}")
+            env[:ui].info(" -- INPUT:              type=#{input[:type]}, bus=#{input[:bus]}")
           end
 
           @channels.each do |channel|
-            env[:ui].info(" -- CHANNEL:             type=#{channel[:type]}, mode=#{channel[:source_mode]}")
-            env[:ui].info(" -- CHANNEL:             target_type=#{channel[:target_type]}, target_name=#{channel[:target_name]}")
+            env[:ui].info(" -- CHANNEL:              type=#{channel[:type]}, mode=#{channel[:source_mode]}")
+            env[:ui].info(" -- CHANNEL:              target_type=#{channel[:target_type]}, target_name=#{channel[:target_name]}")
           end
 
           @pcis.each do |pci|
-            env[:ui].info(" -- PCI passthrough:   #{pci[:bus]}:#{pci[:slot]}.#{pci[:function]}")
+            env[:ui].info(" -- PCI passthrough:    #{pci[:bus]}:#{pci[:slot]}.#{pci[:function]}")
           end
 
           if !@rng[:model].nil?
-            env[:ui].info(" -- RNG device model:  #{@rng[:model]}")
+            env[:ui].info(" -- RNG device model:   #{@rng[:model]}")
           end
 
           @usbs.each do |usb|
@@ -254,12 +254,13 @@ module VagrantPlugins
             env[:ui].info(" -- USB passthrough:   #{usb_dev.join(', ')}")
           end
 
-          env[:ui].info(" -- Command line : #{@cmd_line}")
+          env[:ui].info(" -- Command line :  #{@cmd_line}")
 
           # Create libvirt domain.
           # Is there a way to tell fog to create new domain with already
           # existing volume? Use domain creation from template..
           begin
+            env[:ui].info(to_xml('domain'))
             server = env[:machine].provider.driver.connection.servers.create(
               xml: to_xml('domain'))
           rescue Fog::Errors::Error => e

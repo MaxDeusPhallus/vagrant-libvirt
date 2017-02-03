@@ -153,7 +153,6 @@ module VagrantPlugins
         @cpu_features      = UNSET_VALUE
         @numa_nodes        = UNSET_VALUE
         @loader            = UNSET_VALUE
-        @loader_type       = UNSET_VALUE
         @nvram             = UNSET_VALUE
         @machine_type      = UNSET_VALUE
         @machine_arch      = UNSET_VALUE

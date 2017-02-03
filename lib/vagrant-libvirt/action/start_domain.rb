@@ -271,7 +271,7 @@ module VagrantPlugins
               # Apply
               if descr_changed
                 begin
-                  libvirt_domain.undefine
+                  libvirt_domain.undefine(flags: 4) #4 is VIR_DOMAIN_UNDEFINE_NVRAM
                   new_descr = ""
                   xml_descr.write new_descr
                   server = env[:machine].provider.driver.connection.servers.create(xml: new_descr)
