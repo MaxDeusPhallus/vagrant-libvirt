@@ -63,6 +63,7 @@ module VagrantPlugins
             # Undefine network.
             begin
               libvirt_network.destroy
+              puts'About to call libirt_network.undefine'
               libvirt_network.undefine
               @logger.info "Undefined it"
             rescue => e

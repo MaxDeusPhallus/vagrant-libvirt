@@ -5,11 +5,6 @@
   <% if @type == 'direct'%>
   <source dev='<%= @device %>' mode='<%= @mode %>'/>
   <model type='<%=@model_type%>'/>
-  <% elsif @type == 'hostdev'%>
-  <driver name="vfio"/>
-  <source>
-    <address type='pci' domain='<%= @vfdomain %>' bus='<%= @vfbus %>' slot='<%= @vfslot %>' function='<%= @vffunc %>'/>
-  </source>
   <% elsif !@portgroup.nil? %>
   <source network='<%=@network_name%>' portgroup='<%=@portgroup%>'/>
   <model type='<%=@model_type%>'/>

@@ -73,6 +73,8 @@ module VagrantPlugins
           @tpm_type = config.tpm_type
           @tpm_path = config.tpm_path
 
+          @vfdomain = config.vfdomain
+
           # Boot order
           @boot_order = config.boot_order
 

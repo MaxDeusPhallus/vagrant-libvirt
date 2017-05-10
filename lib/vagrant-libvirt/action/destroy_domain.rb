@@ -33,15 +33,22 @@ module VagrantPlugins
             libvirt_domain.managed_save_remove
           end
 
+
           domain = env[:machine].provider.driver.connection.servers.get(env[:machine].id.to_s)
+          env[:ui].info("Domain Type: %s" % domain.class.name  )
 
           if env[:machine].provider_config.disks.empty? and
               env[:machine].provider_config.cdroms.empty?
             # if using default configuration of disks and cdroms
             # cdroms are consider volumes, but cannot be destroyed
-            domain.destroy(destroy_volumes: true)
+            #domain.destroy(destroy_volumes: true) # can't undefine without nvram flag
+            domain.poweroff unless domain.stopped?
+            #service.vm_action(uuid, :undefine)
+            domain.volumes.each { |vol| vol.destroy }
+            true
           else
-            domain.destroy(destroy_volumes: false)
+            #domain.destroy(destroy_volumes: false)
+            domain.poweroff unless domain.stopped?
 
             env[:machine].provider_config.disks.each do |disk|
               # shared disks remove only manually or ???
@@ -70,7 +77,7 @@ module VagrantPlugins
             root_disk.destroy if root_disk
           end
 
-          domain.undefine(flags: 4) #4 is VIR_DOMAIN_UNDEFINE_NVRAM
+          libvirt_domain.undefine 4  #4 is VIR_DOMAIN_UNDEFINE_NVRAM
 
           @app.call(env)
         end

@@ -84,7 +84,11 @@ module VagrantPlugins
               @model_type = iface_configuration.fetch(:model_type, @nic_model_type)
               @portgroup = iface_configuration.fetch(:portgroup, nil)
               @network_name = iface_configuration.fetch(:network_name, @network_name)
-              template_name = 'public_interface'
+              if @type='hostdev'
+                template_name = 'sriov_interface'
+              else
+                template_name = 'public_interface'
+              end
               @logger.info("Setting up public interface using device #{@device} in mode #{@mode}")
               @ovs = iface_configuration.fetch(:ovs, false)
               @trust_guest_rx_filters = iface_configuration.fetch(:trust_guest_rx_filters, false)
